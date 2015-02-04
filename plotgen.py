@@ -34,8 +34,9 @@
 #
 
 from __future__ import print_function
+import sys
 
-fi = open("/tmp/_")
+fi = open(sys.argv[1])
 fg = open("/tmp/_g", "w")
 
 fg.write("#\n")
@@ -61,6 +62,7 @@ class plot(object):
 			fg.write(i + "\n")
 
 now = 0.0
+epoch = 0.0
 
 class simpll(object):
 	def __init__(self):
@@ -113,9 +115,11 @@ for l in fi:
 		continue
 	ll = l.split()
 	if ll[0] == "Now":
-		now = float(ll[1]) - 1e6
+		if epoch == 0.0:
+			epoch = float(ll[1])
+		now = float(ll[1]) - epoch
 		continue
-	if ll[0] == "SIMPLL":
+	if ll[0] == "SIMPLL" or ll[0] == "PLL":
 		p_simpll.data(ll)
 		continue
 	if ll[0] == "Combine":
